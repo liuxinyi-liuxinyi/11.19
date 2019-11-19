@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>推拉效果</title>
+	<style>
+	/* 内容区域（图片）590*470 */
+	/* 整体的宽度和高度 */
+		.ctboxs{
+			width: 830px;/* 60*4+590 */
+			height: 470px;
+			position: relative;/* 相对定位 */
+			overflow:hidden;/* 超出部分隐藏 */
+		}
+		.ctboxs .ctbox{
+			width: 650px;/* 一个区块的宽度是60+590=650*/
+			height: 470px;
+			display: flex;
+			position: absolute;/* 通过这个进行位置偏移，决定定位 */
+			top: 0;
+		}
+		.ctboxs .ct1{left:0;}
+		.ctboxs .ct2{left:650px;}/* 一个区块的宽度是60+590=650*/
+		.ctboxs .ct3{left:710px;}/* 650+60 */
+		.ctboxs .ct4{left:770px;}/* 710+60 */
+		.ctboxs .ctbox .tile{
+			color: #fff;
+			font-size: 22px;
+			line-height: 1.5;/* 字与字之间加距离用line -height*/
+			/* 一行显示一个，就是让他一行放不下两个字 */
+			padding: 120px 19px 0;/* 左右整体是66，字22 内边距是10,60-22/2 ，上下是120px*/
+			cursor:pointer;
+		}
+		/* 这是在操作每个选项的背景不一样，所以要 */
+		.ctboxs .ct1 .tile{
+			background: rgb(0,0,127);
+		}
+		.ctboxs .ct2 .tile{
+			background: rgb(238,136,0);
+		}
+		.ctboxs .ct3 .tile{
+			background: rgb(127,127,0);
+		}
+		.ctboxs .ct4 .tile{
+			background: rgb(35,97,173);
+		}
+
+	</style>
+</head>
+<body>
+	<div id="ct1" class="ctboxs">
+		<!-- div.ctbox*4>.tile+.content>img[src=$$.jpg][alt=$$] -->
+		<div class="ctbox ct1">
+			<div class="tile">交通行业</div>
+			<div class="content"><img src="11.jpg" alt="1"></div>
+		</div>
+		<div class="ctbox ct2">
+			<div class="tile">司法行业</div>
+			<div class="content"><img src="22.jpg" alt="2"></div>
+		</div>
+		<div class="ctbox ct3">
+			<div class="tile">政府相关行业</div>
+			<div class="content"><img src="33.jpg" alt="3"></div>
+		</div>
+		<div class="ctbox ct4">
+			<div class="tile">其它行业</div>
+			<div class="content"><img src="44.jpg" alt="4"></div>
+		</div>
+	</div>
+	<script>
+		// 点击标题让盒子移动
+		var ctboxs=document.getElementById('ct1');
+		// 获取4个盒子
+		var ctbox=ctboxs.getElementsByClassName('ctbox');
+		// 标题
+		var title=ctboxs.getElementsByClassName('tile');
+		// 内容区域的宽度值
+		var contentwidth=590;
+		// 标题宽度
+		var titlewidth=60;
+		for(var i=0;i<title.length;i++){
+			title[i].index=i;
+			title[i].onclick=function(){
+				for(var i=0;i<ctbox.length;i++){
+					if(ctbox>=i){
+						ctbox[this.index].style.left=i*titlewidth+contentwidth;
+					}else{
+						ctbox[this.index].style.left=i*titlewidth;
+					}
+				}
+				// for(var i=0;i<ctbox.length;i++){
+				// 	if(ctbox.length<=i){
+				// 		ctbox[this.index].style.left=i*titlewidth;
+				// 	}else{
+				// 		ctbox[this.index].style.left=i*titlewidth+contentwidth;
+				// 	}
+
+				// }
+				// 点击标题，让所有的抽屉发生变化
+				// for(var i=0;i<ctbox.length;i++){
+					// if(ctbox<=i){
+					// 	ctbox[this.index].style.left=2*titlewidth;
+					// }else{
+					// 	ctbox[this.index].style.left=i*titlewidth+contentwidth;
+					// }
+				}
+			}
+		//分析：点击的序号记为n,则ctbox序号小于等于n的时候，ctbox的left值计算公式为序号*titlewidth;
+		//ctbox序号大于n的时候，ctbox的left值计算公式为序号n*titlewidth+contentwidth
+		//点击第0号标题：left:0 |650 710 770;0*titlewidth=0
+		//点击第1号标题：left：0 60 |710 770；1*titlewidth=60
+		//点击第2号标题：left：0 60 120| 770；2*titlewidth=120
+		//点击第3号标题：left：0 60 120 180|；3*titlewidth=180
+	</script>
+</body>
+</html>
