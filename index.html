@@ -7,32 +7,38 @@
 	/* 内容区域（图片）590*470 */
 	/* 整体的宽度和高度 */
 		.ctboxs{
-			width: 830px;/* 60*4+590 */
-			height: 470px;
-			position: relative;/* 相对定位 */
+			width:590px;
+			height:710px;/* 60*4+470 */
+			position:relative;/* 相对定位 */
 			overflow:hidden;/* 超出部分隐藏 */
+			/* border:4px solid blue; */
 		}
 		.ctboxs .ctbox{
-			width: 650px;/* 一个区块的宽度是60+590=650*/
-			height: 470px;
-			display: flex;
+			width: 590px;
+			height: 540px;/* 一个区块的高度是60+590=650*/
 			position: absolute;/* 通过这个进行位置偏移，决定定位 */
 			top: 0;
+			transition:2s linear;
+			display: flex;
+			flex-direction:column;
 		}
-		.ctboxs .ct1{left:0;}
-		.ctboxs .ct2{left:650px;}/* 一个区块的宽度是60+590=650*/
-		.ctboxs .ct3{left:710px;}/* 650+60 */
-		.ctboxs .ct4{left:770px;}/* 710+60 */
+		.ctboxs .ct1{top:0;}
+		.ctboxs .ct2{top:530px;}/* 一个区块的宽度是60+470=530 */
+		.ctboxs .ct3{top:590px;}/* 650+60 */
+		.ctboxs .ct4{top:650px;}/*7 10+60 */
 		.ctboxs .ctbox .tile{
+			height: 65px;
 			color: #fff;
 			font-size: 22px;
-			line-height: 1.5;/* 字与字之间加距离用line -height*/
-			/* 一行显示一个，就是让他一行放不下两个字 */
-			padding: 120px 19px 0;/* 左右整体是66，字22 内边距是10,60-22/2 ，上下是120px*/
+			line-height: 1.5;/* 字与字之间加距离用line -height
+			一行显示一个，就是让他一行放不下两个字 */
+			text-align:center;
+			 /* padding: 20px 235px 0; */
 			cursor:pointer;
-		}
-		/* 这是在操作每个选项的背景不一样，所以要 */
-		.ctboxs .ct1 .tile{
+			line-height: 60px;
+					}
+					/* 这是在操作每个选项的背景不一样，所以要 */
+		 .ctboxs .ct1 .tile{
 			background: rgb(0,0,127);
 		}
 		.ctboxs .ct2 .tile{
@@ -44,7 +50,6 @@
 		.ctboxs .ct4 .tile{
 			background: rgb(35,97,173);
 		}
-
 	</style>
 </head>
 <body>
@@ -75,36 +80,23 @@
 		// 标题
 		var title=ctboxs.getElementsByClassName('tile');
 		// 内容区域的宽度值
-		var contentwidth=590;
+		var contentwidth=470;
 		// 标题宽度
 		var titlewidth=60;
+		var n=0;
 		for(var i=0;i<title.length;i++){
 			title[i].index=i;
 			title[i].onclick=function(){
+				n=this.index;
 				for(var i=0;i<ctbox.length;i++){
-					if(ctbox>=i){
-						ctbox[this.index].style.left=i*titlewidth+contentwidth;
+					if(i<=n){
+						ctbox[i].style.top=i*titlewidth+'px';
 					}else{
-						ctbox[this.index].style.left=i*titlewidth;
+						ctbox[i].style.top=i*titlewidth+contentwidth+'px';
 					}
 				}
-				// for(var i=0;i<ctbox.length;i++){
-				// 	if(ctbox.length<=i){
-				// 		ctbox[this.index].style.left=i*titlewidth;
-				// 	}else{
-				// 		ctbox[this.index].style.left=i*titlewidth+contentwidth;
-				// 	}
-
-				// }
-				// 点击标题，让所有的抽屉发生变化
-				// for(var i=0;i<ctbox.length;i++){
-					// if(ctbox<=i){
-					// 	ctbox[this.index].style.left=2*titlewidth;
-					// }else{
-					// 	ctbox[this.index].style.left=i*titlewidth+contentwidth;
-					// }
-				}
 			}
+		}
 		//分析：点击的序号记为n,则ctbox序号小于等于n的时候，ctbox的left值计算公式为序号*titlewidth;
 		//ctbox序号大于n的时候，ctbox的left值计算公式为序号n*titlewidth+contentwidth
 		//点击第0号标题：left:0 |650 710 770;0*titlewidth=0
